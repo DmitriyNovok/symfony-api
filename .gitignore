@@ -1,0 +1,29 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+composer
+composer.phar
+composer.lock
+node_modules/
+tools/
+
+# Editor directories and files
+.DS_Store
+.idea
+.idea/
+.vscode
+.vscode/
+.history
+.history/
+*.suo
+*.ntvs*
+*.njsproj
+
