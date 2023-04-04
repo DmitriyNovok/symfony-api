@@ -13,7 +13,8 @@ class DefaultController extends AbstractController
     public function __construct(
         private BookRepository $bookRepository,
         private EntityManagerInterface $entityManager
-    ){}
+    ) {
+    }
 
     #[Route('/books')]
     public function root(): Response
