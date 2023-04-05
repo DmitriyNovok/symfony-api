@@ -1,8 +1,11 @@
 # Symfony API
 Api Symfony 5
 
-## PHP Stan
+## Stan
 - ./vendor/bin/phpstan analyse src/
 
-## PHP CS Fixer
+## CS Fixer
 - ./vendor/bin/php-cs-fixer fix
+
+## Unit test
+- ./vendor/bin/phpunit
