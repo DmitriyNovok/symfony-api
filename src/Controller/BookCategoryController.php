@@ -24,9 +24,11 @@ class BookCategoryController extends AbstractController
      *     @Model(type=BookCategoryListResponse::class)
      * )
      */
-    #[Route(path: '/api/v1/book/categories', methods: 'GET')]
+    #[Route(path: '/api/v1/book/categories', methods: ['GET', 'OPTIONS'])]
     public function categories(): Response
     {
-        return $this->json($this->bookCategoryService->getCategories());
+        return $this->json(
+            $this->bookCategoryService->getCategories()
+        );
     }
 }
