@@ -18,7 +18,9 @@ class BookCategoryService
     {
         $items = array_map(
             fn (BookCategory $bookCategory) => new BookCategoryListItem(
-                $bookCategory->getId(), $bookCategory->getTitle(), $bookCategory->getSlug()
+                $bookCategory->getId(),
+                $bookCategory->getTitle(),
+                $bookCategory->getSlug()
             ),
             $this->bookCategoryRepository->findBy([], ['title' => Criteria::ASC])
         );
