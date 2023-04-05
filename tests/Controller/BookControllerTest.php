@@ -2,13 +2,10 @@
 
 namespace App\Tests\Controller;
 
-use App\Controller\BookController;
-use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BookControllerTest extends WebTestCase
 {
-
     public function testBooksByCategories(): void
     {
         $client = static::createClient();

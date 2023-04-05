@@ -52,6 +52,7 @@ class Book
     public function setId(int $id): self
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -137,6 +138,7 @@ class Book
 
     /**
      * @param Collection<BookCategory> $categories
+     *
      * @return $this
      */
     public function setCategories(Collection $categories): self
