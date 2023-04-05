@@ -1,1 +1,1 @@
-{"version":1,"defects":[],"times":{"App\\Tests\\Service\\BookCategoryServiceTest::testGetCategories":0.019}}
+{"version":1,"defects":{"App\\Tests\\Controller\\BookCategoryControllerTest::testCategories":7},"times":{"App\\Tests\\Service\\BookCategoryServiceTest::testGetCategories":0.016,"App\\Tests\\Controller\\BookCategoryControllerTest::testCategories":0.235}}
