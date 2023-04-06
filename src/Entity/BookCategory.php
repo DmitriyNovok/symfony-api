@@ -19,12 +19,12 @@ class BookCategory
     #[ORM\Column(type: 'string', length: 255)]
     private string $slug;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
