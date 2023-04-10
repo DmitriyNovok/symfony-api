@@ -1,6 +1,16 @@
 version: '2'
 
 services:
+  database-test:
+    container_name: postgres-test
+    image: postgres:${POSTGRES_VERSION:-15}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-12345}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+
+
 ###> doctrine/doctrine-bundle ###
   database:
     container_name: postgres

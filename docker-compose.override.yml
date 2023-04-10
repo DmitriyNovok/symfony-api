@@ -6,3 +6,10 @@ services:
     ports:
       - "5432:5432"
 ###< doctrine/doctrine-bundle ###
+
+
+###> doctrine/doctrine-bundle ###
+  database-test:
+    ports:
+      - "5433:5432"
+###< doctrine/doctrine-bundle ###
