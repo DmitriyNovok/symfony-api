@@ -26,7 +26,7 @@ class BookCategoryController extends AbstractController
      */
     #[Route(
         path: '/api/v1/book/categories',
-        methods: ['GET', 'OPTIONS']
+        methods: 'GET'
     )]
     public function categories(): Response
     {

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Exception\BookCategoryNotFoundException;
 use App\Model\BookListResponse;
 use App\Service\BookService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +28,7 @@ class BookController extends AbstractController
      */
     #[Route(
         path: '/api/v1/category/{id}/books',
-        methods: ['GET', 'OPTIONS']
+        methods: 'GET'
     )]
     public function bookByCategory(int $id): Response
     {
