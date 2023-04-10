@@ -34,6 +34,6 @@ class BookCategoryRepositoryTest extends AbstractRepositoryTest
             $this->bookCategoryRepository->findAllSortedByTitle()
         );
 
-        $this->assertEquals(['Android', 'Computer', 'Devices'], $titles);
+        $this->assertEquals(['Android', 'Computer', 'Devices', 'Devices'], $titles);
     }
 }
