@@ -11,7 +11,7 @@ abstract class AbstractTestCase extends TestCase
         $class = new \ReflectionClass($entity);
         $property = $class->getProperty($idField);
         $property->setAccessible(true);
-        $property->setValue($entity, $value,);
+        $property->setValue($entity, $value);
         $property->setAccessible(false);
     }
 }
