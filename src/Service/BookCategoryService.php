@@ -22,7 +22,7 @@ class BookCategoryService
                 $bookCategory->getTitle(),
                 $bookCategory->getSlug()
             ),
-            $this->bookCategoryRepository->findBy([], ['title' => Criteria::ASC])
+            $this->bookCategoryRepository->findAllSortedByTitle()
         );
 
         return new BookCategoryListResponse($items);
