@@ -11,15 +11,15 @@ use App\Repository\BookRepository;
 
 class BookService
 {
-    public function __construct(private BookRepository $bookRepository, private BookCategoryRepository $bookCategoryRepository)
-    {
+    public function __construct(
+        private BookRepository $bookRepository,
+        private BookCategoryRepository $bookCategoryRepository
+    ) {
     }
 
     public function getBookByCategory(int $category_id): BookListResponse
     {
-        $category = $this->bookCategoryRepository->find($category_id);
-
-        if (null === $category) {
+        if (!$this->bookCategoryRepository->existById($category_id)) {
             throw new BookCategoryNotFoundException();
         }
 
