@@ -33,8 +33,8 @@ class ExceptionMappingResolverTest extends AbstractTestCase
         $mapping = $resolver->resolve(\InvalidArgumentException::class);
 
         $this->assertEquals(400, $mapping->getCode());
-        $this->assertFalse($mapping->isHidden());
-        $this->assertTrue($mapping->isLoggable());
+        $this->assertTrue($mapping->isHidden());
+        $this->assertFalse($mapping->isLoggable());
     }
 
     public function testResolvesSubClass(): void
