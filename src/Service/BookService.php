@@ -15,6 +15,7 @@ use App\Repository\BookCategoryRepository;
 use App\Repository\BookRepository;
 use App\Repository\ReviewRepository;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ReadableCollection;
 
 class BookService
 {
@@ -41,9 +42,9 @@ class BookService
 
     public function getBookById(int $id): BookDetails
     {
+        $rating = 0;
         $book = $this->bookRepository->getById($id);
         $reviews = $this->reviewRepository->countByBookId($id);
-        $ratingSum = $this->reviewRepository->getBookRatingTotalSum($id);
         $categories = $book->getCategories()
             ->map(function (BookCategory $bookCategory) {
                 return new BookCategoryModel(
@@ -53,6 +54,10 @@ class BookService
                 );
             });
 
+        if ($reviews > 0) {
+            $rating = $this->reviewRepository->getBookRatingTotalSum($id) / $reviews;
+        }
+
         return (new BookDetails())
             ->setId($book->getId())
             ->setTitle($book->getTitle())
@@ -61,17 +66,16 @@ class BookService
             ->setImage($book->getImage())
             ->setPublicationDate($book->getPublicationDate()->getTimestamp())
             ->setMeap($book->isMeap())
-            ->setRating($ratingSum / $reviews)
+            ->setRating($rating)
             ->setReviews($reviews)
-            ->setFormats($this->mapFormats($book->getFormats()))
+            ->setFormats((array) $this->mapFormats($book->getFormats()))
             ->setCategories($categories->toArray());
     }
 
     /**
      * @param Collection<BookToBookFormat> $formats
-     * @return array
      */
-    private function mapFormats(Collection $formats): array
+    private function mapFormats(Collection $formats): ReadableCollection
     {
         return $formats->map(function (BookToBookFormat $bookToBookFormat) {
             return (new BookFormat())

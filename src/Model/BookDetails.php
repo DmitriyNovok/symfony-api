@@ -26,12 +26,12 @@ class BookDetails
     private int $reviews;
 
     /**
-     * @var array BookCategory[]
+     * @var BookCategory[]
      */
     private array $categories;
 
     /**
-     * @var array BookFormat[]
+     * @var BookFormat[]
      */
     private array $formats;
 

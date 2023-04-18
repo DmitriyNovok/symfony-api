@@ -23,7 +23,7 @@ class Review
     #[ORM\Column(type: 'string', length: 255)]
     private string $author;
 
-    #[ORM\Column(type: 'date_immutable')]
+    #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeInterface $createdAt;
 
     #[ORM\JoinColumn(nullable: false)]
