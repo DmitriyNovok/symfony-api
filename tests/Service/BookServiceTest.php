@@ -62,7 +62,7 @@ class BookServiceTest extends AbstractTestCase
             ->setCategories(new ArrayCollection())
             ->setImage('/storage/images/324c0vdsjffs')
             ->setMeap(false)
-            ->setPublicationDate(new \DateTime('2010-10-10'))
+            ->setPublicationDate(new \DateTimeImmutable('2010-10-10'))
             ->setAuthors(['Tester']);
 
         $this->setEntityId($book, 123);

@@ -58,7 +58,7 @@ class BookControllerTest extends AbstractControllerTest
             ->setImage('/storage/fsfsd87sdfn')
             ->setMeap(true)
             ->setAuthors(['Test authors'])
-            ->setPublicationDate(new \DateTime());
+            ->setPublicationDate(new \DateTimeImmutable());
 
         $this->entityManager->persist($book);
 
