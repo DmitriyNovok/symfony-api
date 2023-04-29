@@ -48,12 +48,14 @@ class BookController extends AbstractController
      * @OA\Response(
      *     response=200,
      *     description="Returns book detail inforamation",
+     *
      *     @Model(type=BookDetails::class)
      * )
      *
      * @OA\Response(
      *     response=404,
      *     description="Book not found",
+     *
      *     @Model(type=ErrorResponse::class)
      * )
      */

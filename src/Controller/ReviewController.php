@@ -19,9 +19,11 @@ class ReviewController extends AbstractController
 
     /**
      * @OA\Parameter(name="page", in="query", description="Page number", @OA\Schema(type="integer"))
+     *
      * @OA\Response(
      *     response=200,
      *     description="Returns page of reviews for the given book",
+     *
      *     @Model(type=ReviewPage::class)
      * )
      */

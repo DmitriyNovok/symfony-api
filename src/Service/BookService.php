@@ -6,6 +6,7 @@ use App\Entity\Book;
 use App\Entity\BookCategory;
 use App\Entity\BookToBookFormat;
 use App\Exception\BookCategoryNotFoundException;
+use App\Mapper\BookMapper;
 use App\Model\BookCategory as BookCategoryModel;
 use App\Model\BookDetails;
 use App\Model\BookFormat;
@@ -34,7 +35,7 @@ class BookService
 
         return new BookListResponse(
             array_map(
-                [$this, 'map'],
+                fn (Book $book) => BookMapper::map($book, new BookListItem()),
                 $this->bookRepository->findBooksByCategoryId($category_id)
             )
         );
@@ -45,6 +46,7 @@ class BookService
         $rating = 0;
         $book = $this->bookRepository->getById($id);
         $reviews = $this->reviewRepository->countByBookId($id);
+
         $categories = $book->getCategories()
             ->map(function (BookCategory $bookCategory) {
                 return new BookCategoryModel(
@@ -58,23 +60,13 @@ class BookService
             $rating = $this->reviewRepository->getBookRatingTotalSum($id) / $reviews;
         }
 
-        return (new BookDetails())
-            ->setId($book->getId())
-            ->setTitle($book->getTitle())
-            ->setSlug($book->getSlug())
-            ->setAuthors($book->getAuthors())
-            ->setImage($book->getImage())
-            ->setPublicationDate($book->getPublicationDate()->getTimestamp())
-            ->setMeap($book->isMeap())
+        return BookMapper::map($book, new BookDetails())
             ->setRating($rating)
             ->setReviews($reviews)
             ->setFormats((array) $this->mapFormats($book->getFormats()))
             ->setCategories($categories->toArray());
     }
 
-    /**
-     * @param Collection<BookToBookFormat> $formats
-     */
     private function mapFormats(Collection $formats): ReadableCollection
     {
         return $formats->map(function (BookToBookFormat $bookToBookFormat) {
@@ -86,17 +78,5 @@ class BookService
                 ->setPrice($bookToBookFormat->getPrice())
                 ->setDiscountPercent($bookToBookFormat->getDiscountPercent());
         });
-    }
-
-    public function map(Book $book): BookListItem
-    {
-        return (new BookListItem())
-            ->setId($book->getId())
-            ->setTitle($book->getTitle())
-            ->setSlug($book->getSlug())
-            ->setAuthors($book->getAuthors())
-            ->setImage($book->getImage())
-            ->setPublicationDate($book->getPublicationDate()->getTimestamp())
-            ->setMeap($book->isMeap());
     }
 }

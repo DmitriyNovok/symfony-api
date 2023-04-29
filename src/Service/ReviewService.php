@@ -22,7 +22,7 @@ class ReviewService
         $total = count($paginator);
         $rating = 0;
 
-         if ($total > 0) {
+        if ($total > 0) {
             $rating = $this->reviewRepository->getBookRatingTotalSum($id) / $total;
         }
 
