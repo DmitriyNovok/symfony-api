@@ -10,51 +10,75 @@ use App\Repository\BookCategoryRepository;
 use App\Repository\BookRepository;
 use App\Repository\ReviewRepository;
 use App\Service\BookService;
+use App\Service\RatingService;
 use App\Tests\AbstractTestCase;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class BookServiceTest extends AbstractTestCase
 {
+    private BookRepository $bookRepository;
+
+    private ReviewRepository $reviewsRepository;
+
+    private BookCategoryRepository $bookCategoryRepository;
+
+    private RatingService $ratingService;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->reviewsRepository = $this->createMock(ReviewRepository::class);
+        $this->bookRepository = $this->createMock(BookRepository::class);
+        $this->bookCategoryRepository = $this->createMock(BookCategoryRepository::class);
+        $this->ratingService = $this->createMock(RatingService::class);
+    }
+
     public function testGetBookByCategoryNotFound(): void
     {
-        $reviewsRepository = $this->createMock(ReviewRepository::class);
-        $bookRepository = $this->createMock(BookRepository::class);
-        $bookCategoryRepository = $this->createMock(BookCategoryRepository::class);
-
-        $bookCategoryRepository->expects($this->once())
+        $this->bookCategoryRepository->expects($this->once())
             ->method('existById')
             ->with(130)
             ->willReturn(false);
 
         $this->expectException(BookCategoryNotFoundException::class);
 
-        (new BookService($bookRepository, $bookCategoryRepository, $reviewsRepository))->getBookByCategory(130);
+        $this->createBookService()->getBookByCategory(130);
     }
 
     public function testGetBookByCategory(): void
     {
-        $reviewsRepository = $this->createMock(ReviewRepository::class);
-        $bookRepository = $this->createMock(BookRepository::class);
-        $bookRepository->expects($this->once())
+        $this->bookRepository->expects($this->once())
             ->method('findBooksByCategoryId')
             ->with(130)
             ->willReturn([
                 $this->createBookEntity(),
             ]);
 
-        $bookCategoryRepository = $this->createMock(BookCategoryRepository::class);
-
-        $bookCategoryRepository->expects($this->once())
+        $this->bookCategoryRepository->expects($this->once())
             ->method('existById')
             ->with(130)
             ->willReturn(true);
 
-        $service = new BookService($bookRepository, $bookCategoryRepository, $reviewsRepository);
         $expected = new BookListResponse([
             $this->createBookItemModel(),
         ]);
 
-        $this->assertEquals($expected, $service->getBookByCategory(130));
+        $this->assertEquals(
+            $expected,
+            $this->createBookService()
+                ->getBookByCategory(130)
+        );
+    }
+
+    private function createBookService(): BookService
+    {
+        return new BookService(
+            $this->bookRepository,
+            $this->bookCategoryRepository,
+            $this->reviewsRepository,
+            $this->ratingService
+        );
     }
 
     private function createBookEntity()
