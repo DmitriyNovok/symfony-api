@@ -23,7 +23,8 @@ class BookService
     public function __construct(
         private BookRepository $bookRepository,
         private BookCategoryRepository $bookCategoryRepository,
-        private ReviewRepository $reviewRepository
+        private ReviewRepository $reviewRepository,
+        private RatingService $ratingService
     ) {
     }
 
@@ -43,7 +44,6 @@ class BookService
 
     public function getBookById(int $id): BookDetails
     {
-        $rating = 0;
         $book = $this->bookRepository->getById($id);
         $reviews = $this->reviewRepository->countByBookId($id);
 
@@ -56,12 +56,10 @@ class BookService
                 );
             });
 
-        if ($reviews > 0) {
-            $rating = $this->reviewRepository->getBookRatingTotalSum($id) / $reviews;
-        }
-
         return BookMapper::map($book, new BookDetails())
-            ->setRating($rating)
+            ->setRating(
+                $this->ratingService->calcReviewRatingForBook($id, $reviews)
+            )
             ->setReviews($reviews)
             ->setFormats((array) $this->mapFormats($book->getFormats()))
             ->setCategories($categories->toArray());
