@@ -19,9 +19,14 @@ class ReviewService
 
     public function getReviewPageByBookId(int $id, int $page): ReviewPage
     {
+        $items = [];
         $offset = max($page - 1, 0) * self::PAGE_LIMIT;
         $paginator = $this->reviewRepository->getPageBookById($id, $offset, self::PAGE_LIMIT);
         $total = count($paginator);
+
+        foreach ($paginator as $item) {
+            $items[] = $this->map($item);
+        }
 
         return (new ReviewPage())
             ->setRating(
@@ -31,12 +36,7 @@ class ReviewService
             ->setPage($page)
             ->setPerPage(self::PAGE_LIMIT)
             ->setPages(ceil($total / self::PAGE_LIMIT))
-            ->setItems(
-                array_map(
-                    [$this, 'map'],
-                    $paginator->getIterator()->getArrayCopy()
-                )
-            );
+            ->setItems($items);
     }
 
     public function map(Review $review): ReviewModel

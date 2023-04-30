@@ -34,7 +34,10 @@ class ReviewRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function getPageBookById(int $id, int $offset, int $limit): Paginator
+    /**
+     * @return \Traversable&\Countable
+     */
+    public function getPageBookById(int $id, int $offset, int $limit)
     {
         $query = $this->_em->createQuery('SELECT r FROM App\Entity\Review r WHERE r.book = :id ORDER BY r.createdAt DESC')
             ->setParameter('id', $id)
