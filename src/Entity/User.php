@@ -93,7 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * and populated in any number of different ways when the user object
      * is created.
      *
-     * @return array[]
+     * @return string[]
      */
     public function getRoles(): array
     {
