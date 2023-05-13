@@ -68,7 +68,7 @@ class JwtUserProvider implements PayloadAwareUserProviderInterface
         return null;
     }
 
-    public function getUser(string $key, string $value): UserInterface
+    private function getUser(string $key, string $value): UserInterface
     {
         $user = $this->userRepository->findOneBy([$key => $value]);
 
