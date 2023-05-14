@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Attribute\RequestBody;
 use App\Model\ErrorResponse;
-use App\Model\IdResponse;
 use App\Model\SignUpRequest;
 use App\Service\SignUpService;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -24,7 +23,11 @@ class AuthController extends AbstractController
      *     response=200,
      *     description="Sign up user",
      *
-     *     @Model(type=IdResponse::class)
+     *     @OA\JsonContent(
+     *
+     *       @OA\Property(property="token", type="string"),
+     *       @OA\Property(property="refresh_token", type="string"),
+     *   )
      * )
      *
      * @OA\Response(
@@ -46,8 +49,6 @@ class AuthController extends AbstractController
     #[Route('/api/v1/auth/signUp', methods: ['POST'])]
     public function signUp(#[RequestBody] SignUpRequest $signUpRequest): Response
     {
-        return $this->json(
-            $this->signUpService->signUp($signUpRequest)
-        );
+        return $this->signUpService->signUp($signUpRequest);
     }
 }

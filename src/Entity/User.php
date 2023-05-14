@@ -28,6 +28,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private string $password;
 
+    #[ORM\Column(type: 'simple_array')]
+    private array $roles;
+
     public function getFirstName(): string
     {
         return $this->firstName;
@@ -81,23 +84,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    /**
-     * Returns the roles granted to the user.
-     *
-     *     public function getRoles()
-     *     {
-     *         return ['ROLE_USER'];
-     *     }
-     *
-     * Alternatively, the roles might be stored in a ``roles`` property,
-     * and populated in any number of different ways when the user object
-     * is created.
-     *
-     * @return string[]
-     */
     public function getRoles(): array
     {
-        return [];
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
     /**
@@ -130,8 +126,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function getUserIdentifier(): ?int
+    public function getUserIdentifier(): string
     {
-        return $this->id;
+        return $this->email;
     }
 }
