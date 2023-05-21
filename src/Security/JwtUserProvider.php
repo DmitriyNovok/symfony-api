@@ -52,10 +52,8 @@ class JwtUserProvider implements PayloadAwareUserProviderInterface
 
     /**
      * Whether this provider supports the given user class.
-     *
-     * @return bool
      */
-    public function supportsClass(string $class)
+    public function supportsClass(string $class): bool
     {
         return User::class === $class || is_subclass_of($class, User::class);
     }
