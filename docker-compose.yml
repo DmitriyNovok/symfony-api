@@ -12,6 +12,18 @@ services:
 
 
 ###> doctrine/doctrine-bundle ###
+  mysql_db:
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'mysql'
+      MYSQL_PASSWORD: 'mysql_pass'
+    volumes:
+      - ./dbdata:/var/lib/mysql/
+
+
   database:
     container_name: postgres
     image: postgres:${POSTGRES_VERSION:-15}-alpine
